@@ -21,7 +21,7 @@ public class MyStack<T> {
 
     public void push(T item) {
         if (isFull()) {
-            throw new StackOverflowError();
+            reCapacity(size+(size/2));
         }
         list[size] = item;
         size++;
@@ -59,5 +59,16 @@ public class MyStack<T> {
         T[] tempArr = (T[]) new Object[newCapacity];
         System.arraycopy(list, 0, tempArr, 0, size);
         list = tempArr;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[ ");
+        for (int i = 0; i < size; i++) {
+            sb.append(list[i]).append(", ");
+        }
+        sb.setLength(sb.length() - 2);
+        sb.append(" ]");
+        return sb.toString();
     }
 }

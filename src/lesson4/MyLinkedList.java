@@ -1,6 +1,8 @@
 package lesson4;
 
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class MyLinkedList<T> implements Iterable<T>{
     private Node first;
@@ -11,6 +13,8 @@ public class MyLinkedList<T> implements Iterable<T>{
     public Iterator<T> iterator() {
         return new Iter();
     }
+
+    public ListIterator<T> listIterator() { return new ListIter();}
 
     public MyLinkedList() {
         first = null;
@@ -50,6 +54,80 @@ public class MyLinkedList<T> implements Iterable<T>{
             current = current.next;
             return current.value;
         }
+    }
+
+    private class ListIter implements ListIterator<T>{
+        Node current = new Node(null, first);
+        int index = -1;
+        @Override
+        public boolean hasNext() {
+            return current.next != null;
+        }
+
+        @Override
+        public T next() {
+            if(index>=size()-1) {
+                throw new NoSuchElementException();
+            }
+            current = current.next;
+            index++;
+            return current.value;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return index!=-1;
+        }
+
+        @Override
+        public T previous() {
+            if(index==-1) {
+                throw new NoSuchElementException();
+            }
+            T value = current.value;
+            current = current.previous;
+            index--;
+            return value;
+        }
+
+        @Override
+        public int nextIndex() {
+            if((index+1) > size()) {
+                return size();
+            } else {
+                return index+1;
+            }
+
+        }
+
+        @Override
+        public int previousIndex() {
+            if((index-1)<0) {
+                return -1;
+            } else {
+                return index-1;
+            }
+        }
+
+        @Override
+        public void remove() {
+            if(index==-1) {
+                throw new IllegalStateException();
+            }
+            delete(current);
+        }
+
+        @Override
+        public void set(T t) {
+            current.value = t;
+        }
+
+        @Override
+        public void add(T t) {
+            insert(index,t);
+        }
+
+
     }
 
     public void insertFirst(T item) {
@@ -143,6 +221,33 @@ public class MyLinkedList<T> implements Iterable<T>{
 
         Node current = first;
         while (current!= null && !current.value.equals(item)) {
+            current = current.next;
+        }
+        if (current == null) {
+            return false;
+        }
+        if(current == last){
+            deleteLast();
+            return true;
+        }
+
+        current.previous.next = current.next;
+        current.next.previous = current.previous;
+        size--;
+        return true;
+    }
+
+    public boolean delete(Node nodeDel) {
+        if (isEmpty()) {
+            return false;
+        }
+        if (first == nodeDel) {
+            deleteFirst();
+            return true;
+        }
+
+        Node current = first;
+        while (current!= null && !(current==nodeDel)) {
             current = current.next;
         }
         if (current == null) {

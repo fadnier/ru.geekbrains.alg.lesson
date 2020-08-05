@@ -1,5 +1,6 @@
 package lesson2;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class MyArrayList<T extends Comparable<T>> {
@@ -20,30 +21,18 @@ public class MyArrayList<T extends Comparable<T>> {
     }
 
     public void add(T item) {
-        checksize();
         list[size] = item;
         size++;
     }
 
     public void add(int index, T item) {
         checkCorrectIndex(index);
+
         for (int i = size; i > index; i--) {
             list[i] = list[i - 1];
         }
         list[index] = item;
         size++;
-        checksize();
-    }
-
-    private void checksize() {
-        if(size >= list.length) {
-            //System.out.println("refactor: "+size+" to "+(size+size/2));
-            T[] oldList = list;
-            list = (T[]) new Comparable[(size+size/2)];
-            for (int i = 0; i < size; i++) {
-                list[i] = oldList[i];
-            }
-        }
     }
 
     public boolean remove(T item) {
@@ -128,37 +117,12 @@ public class MyArrayList<T extends Comparable<T>> {
         }
     }
 
-    public void selectionSort(Comparator<T> comparator) {
-        for (int i = 0; i < size - 1; i++) {
-            int iMin = i;
-            for (int j = i + 1; j < size; j++) {
-                if (comparator.compare(list[j], list[iMin]) < 0) {
-                    iMin = j;
-                }
-            }
-            swap(i, iMin);
-        }
-    }
-
     public void insertionSort() {
         T key;
         for (int i = 1; i < size; i++) {
             int j = i;
             key = list[i];
             while (j > 0 && less(key, list[j - 1])) {
-                list[j] = list[j - 1];
-                j--;
-            }
-            list[j] = key;
-        }
-    }
-
-    public void insertionSort(Comparator<T> comparator) {
-        T key;
-        for (int i = 1; i < size; i++) {
-            int j = i;
-            key = list[i];
-            while (j > 0 && comparator.compare(key, list[j - 1]) < 0) {
                 list[j] = list[j - 1];
                 j--;
             }
@@ -197,6 +161,44 @@ public class MyArrayList<T extends Comparable<T>> {
                 return;
             }
         }
+    }
+
+    public void quickSort() {
+        quickSort(0, size - 1);
+    }
+
+    private void quickSort(int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int mid = lo + (hi - lo) / 2;
+        T opora = list[mid];
+
+        int i = lo;
+        int j = hi;
+        while (i <= j) {
+            while (less(list[i], opora)) {
+                i++;
+            }
+            while (less(opora, list[j])) {
+                j--;
+            }
+            if (i <= j) {
+                swap(i, j);
+                i++;
+                j--;
+            }
+        }
+        if (lo < j) {
+            quickSort(lo, j);
+        }
+        if (hi > i) {
+            quickSort(i, hi);
+        }
+    }
+
+    public void timSort(){
+        Arrays.sort(list);
     }
 
 }

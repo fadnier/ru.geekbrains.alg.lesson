@@ -3,8 +3,6 @@ package lesson2;
 import java.util.*;
 
 public class Main {
-    final static int COUNTARR = 1000000;
-
     public static void main(String[] args) {
 
 //        String[] strArr ;
@@ -63,52 +61,48 @@ public class Main {
 //
 //        System.out.println(msal);
 //
-//        System.out.println(msal.binaryFind(4));
+//        System.out.println(msal.recBinaryFind(2));
 
 
-        MyArrayList<Integer> myArrayList = new MyArrayList<>(COUNTARR);
-        MyArrayList<Integer> myArrayList2 = new MyArrayList<>(COUNTARR);
-        MyArrayList<Integer> myArrayList3 = new MyArrayList<>(COUNTARR);
+
+        MyArrayList<Integer> mal = new MyArrayList<>(1000000);
         Random rand = new Random();
-        for (int i = 0; i <COUNTARR; i++) {
-            int randomSel = rand.nextInt(100);
-            myArrayList.add(randomSel);
-            myArrayList2.add(randomSel);
-            myArrayList3.add(randomSel);
+        for (int i = 0; i <1000000 ; i++) {
+            mal.add(rand.nextInt(1000000));
         }
-//        System.out.println(mal);
-//
-////        mal.selectionSort();
-////        mal.insertionSort();
-////        mal.bubbleSort(Comparator.naturalOrder());
+
+        long begin = System.currentTimeMillis();
+
+//        mal.selectionSort();
+//        mal.insertionSort();
+//        mal.bubbleSort(Comparator.naturalOrder());
 //        mal.bubbleSort(Comparator.reverseOrder());
-//
+//        mal.quickSort();// O(n * log n)
+        mal.timSort();
+
+        long end = System.currentTimeMillis();
+        System.out.println("time: "+ (end- begin)+" ms");
+
+
+
+
 //        System.out.println(mal);
 
 
 //        MyArrayList<String> myArrayList = new MyArrayList<>();
-//       myArrayList.add("aaa");
+//        myArrayList.add("aaa");
 //        myArrayList.add("BBB");
 //        myArrayList.add("bbbbbbb");
 //        myArrayList.add("ccc");
 //        myArrayList.add("AAAAA");
 //        myArrayList.add("xxx");
 //        myArrayList.add("YYYyy");
-
-        //System.out.println(myArrayList);
-        long a = System.currentTimeMillis();
-        myArrayList.bubbleSort(Comparator.naturalOrder());
-        long timeBubbleSort = System.currentTimeMillis() - a;
-        a = System.currentTimeMillis();
-        myArrayList2.insertionSort(Comparator.naturalOrder());
-        long timeInsertionSort = System.currentTimeMillis() - a;
-        a = System.currentTimeMillis();
-        myArrayList3.selectionSort(Comparator.naturalOrder());
-        long timeSelectionSort = System.currentTimeMillis() - a;
-        System.out.printf("Сортировка массивов завершена:\nbubbleSort - %d сек.\ninsertionSort - %d сек.\nselectionSort - %d сек.",(int)timeBubbleSort/1000,(int)timeInsertionSort/1000,(int)timeSelectionSort/1000);
+//
+//        System.out.println(myArrayList);
+////        myArrayList.bubbleSort(Comparator.naturalOrder());
 //        myArrayList.bubbleSort(Comparator.comparingInt(String::length));
-//        myArrayList.bubbleSort(Comparator.comparingInt(String::length).reversed());
-//        myArrayList.bubbleSort(Comparator.comparingISystem.out.println(myArrayList);nt(String::length).thenComparing(String::compareToIgnoreCase));
+////        myArrayList.bubbleSort(Comparator.comparingInt(String::length).reversed());
+////        myArrayList.bubbleSort(Comparator.comparingInt(String::length).thenComparing(String::compareToIgnoreCase));
 //        System.out.println(myArrayList);
     }
 

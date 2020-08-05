@@ -30,9 +30,9 @@ public class Main {
         items.add(new Item("Котелок", 1, 500));
 
         Backpack bp = new Backpack(4);
-        bp.MakeAllSets(items);
+        bp.makeAllSets(items);
 
-        List<Item> solve = bp.GetBestSet();
+        List<Item> solve = bp.getBestSet();
 
         if(solve==null) {
             System.out.println("Нет решения");

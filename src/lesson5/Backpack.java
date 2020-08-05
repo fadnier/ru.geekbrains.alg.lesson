@@ -12,7 +12,7 @@ public class Backpack {
         this.maxW = maxW;
     }
 
-    private double CalcWeight(List<Item> items) {
+    private double calcWeight(List<Item> items) {
         double sumW = 0;
 
         for (Item i: items) {
@@ -22,7 +22,7 @@ public class Backpack {
         return sumW;
     }
 
-    private double CalcPrice(List<Item> items) {
+    private double calcPrice(List<Item> items) {
         double sumPrice = 0;
 
         for (Item i: items) {
@@ -32,23 +32,23 @@ public class Backpack {
         return sumPrice;
     }
 
-    private void CheckSet(List<Item> items) {
+    private void checkSet(List<Item> items) {
         if(bestItem == null) {
-            if(CalcWeight(items) <= maxW) {
+            if(calcWeight(items) <= maxW) {
                 bestItem =items;
-                bestPrice = CalcPrice(items);
+                bestPrice = calcPrice(items);
             }
         } else {
-            if(CalcWeight(items) <= maxW && CalcPrice(items) > bestPrice) {
+            if(calcWeight(items) <= maxW && calcPrice(items) > bestPrice) {
                 bestItem = items;
-                bestPrice = CalcPrice(items);
+                bestPrice = calcPrice(items);
             }
         }
     }
 
-    public void MakeAllSets(List<Item> items) {
+    public void makeAllSets(List<Item> items) {
         if(items.size() > 0) {
-            CheckSet(items);
+            checkSet(items);
         }
 
         for (int i = 0; i < items.size(); i++) {
@@ -56,11 +56,11 @@ public class Backpack {
 
             newSet.remove(i);
 
-            MakeAllSets(newSet);
+            makeAllSets(newSet);
         }
     }
 
-    public List<Item> GetBestSet() {
+    public List<Item> getBestSet() {
         return bestItem;
     }
 }

@@ -1,5 +1,8 @@
 package lesson5;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 //        System.out.println(fact(5));
@@ -11,9 +14,42 @@ public class Main {
 //        System.out.println(triangleNum(5));
 //        System.out.println(recTriangleNum(5));
 
-        System.out.println(multiply(3, 8));
-        System.out.println(recMultiply(3,8));
+        //System.out.println(multiply(3, 8));
+        //System.out.println(recMultiply(3,8));
 
+        ///Задание 1.
+        System.out.println(recDegree(4,8));
+
+        //Задание 2.
+        List<Item> items = new ArrayList<>();
+
+        items.add(new Item("Книга", 1, 600));
+        items.add(new Item("Бинокль", 2, 5000));
+        items.add(new Item("Аптечка", 4, 1500));
+        items.add(new Item("Ноутбук", 2, 40000));
+        items.add(new Item("Котелок", 1, 500));
+
+        Backpack bp = new Backpack(4);
+        bp.MakeAllSets(items);
+
+        List<Item> solve = bp.GetBestSet();
+
+        if(solve==null) {
+            System.out.println("Нет решения");
+        } else {
+            System.out.println("Лучшее решение:");
+            for (Item i: solve ) {
+                System.out.println(i.name + " " + i.price + " " + i.weight);
+            }
+        }
+
+    }
+
+    public static int recDegree(int a, int b) {
+        if(b == 1) {
+            return a;
+        }
+        return recDegree(a,b-1) * a;
     }
 
     public static int fact(int n) {

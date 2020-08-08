@@ -11,11 +11,24 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         Node left;
         Node right;
         int size;
+        int depth;
 
         public Node(Key key, Value value) {
             this.key = key;
             this.value = value;
             this.size = 1;
+            this.depth = 0;
+        }
+
+    }
+
+    public boolean balance() {
+        if(Math.abs(depth(root.left) - depth(root.right)) > 1) {
+            System.out.println("Не сбалансировано. Глубина левого "+depth(root.left)+". Глубина правого "+depth(root.right));
+            return false;
+       } else {
+            System.out.println("Сбалансировано. Глубина левого "+depth(root.left)+". Глубина правого "+depth(root.right));
+            return true;
         }
     }
 
@@ -23,11 +36,22 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         return size(root);
     }
 
+    public int depth() {
+        return depth(root);
+    }
+
     private int size(Node node) {
         if (node == null) {
             return 0;
         }
         return node.size;
+    }
+
+    private int depth(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return node.depth;
     }
 
     public boolean isEmpty() {
@@ -89,6 +113,7 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
             node.right = put(node.right, key, value);
         }
         node.size = size(node.left) + size(node.right) + 1;
+        node.depth = Math.max(depth(node.left),depth(node.right)) + 1;
         return node;
     }
 
@@ -117,6 +142,7 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
         }
         node.left = deleteMin(node.left);
         node.size = size(node.left) + size(node.right) + 1;
+        node.depth = Math.max(depth(node.left),depth(node.right)) + 1;
         return node;
     }
 
@@ -148,6 +174,7 @@ public class MyTreeMap<Key extends Comparable<Key>, Value> {
             node.left = temp.left;
         }
         node.size = size(node.left) + size(node.right) + 1;
+        node.depth = Math.max(depth(node.left),depth(node.right)) + 1;
         return node;
     }
 
